@@ -3,6 +3,7 @@ package com.trustledger.controller;
 
 import com.trustledger.entity.Account;
 import com.trustledger.service.AccountService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +12,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
+import jakarta.validation.Valid;
 import java.util.List;
-
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PutMapping;
 @RestController
 @RequestMapping("/api/accounts")
 public class AccountController {
@@ -26,7 +28,7 @@ public class AccountController {
 
     // Create a new account
     @PostMapping
-    public Account createAccount(@RequestBody Account account) {
+    public Account createAccount(@Valid @RequestBody Account account) {
         return accountService.createAccount(account);
     }
 
@@ -46,4 +48,13 @@ public class AccountController {
                 .orElseGet(() ->
                         ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
+
+    @PutMapping("/{id}")
+    public Account updateAccount(
+            @PathVariable Long id,
+            @Valid @RequestBody Account account) {
+
+        return accountService.updateAccount(id, account);
+    }
+
 }

@@ -5,7 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.Column;
 @Entity
 public class Account {
 
@@ -13,10 +14,15 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    // Account details
+    //ACCOUNT DETAILS
+    @Column(unique = true)
+    @NotBlank(message = "Account number is required")
     private String accountNumber;
+
+    @NotBlank(message = "Account holder name is required")
     private String accountHolderName;
+
+    @NotBlank(message = "Bank name is required")
     private String bankName;
 
     // JPA requires a no-argument constructor
